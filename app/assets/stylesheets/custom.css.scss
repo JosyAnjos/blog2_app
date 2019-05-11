@@ -9,7 +9,7 @@ body {
 
 // Navbar styling
 .navbar {
- background: #64103F;
+ background: #4BABFF;
  padding-bottom: 20px;
 }
 
@@ -75,10 +75,20 @@ body {
 
 .article-detail {
   margin-top: 20px;
-  color: #0000ff;
+  color: 5546FF;
 }
 
 .article-detail-title {
+  color: 5546FF;
   font-size: 3em;
   margin-bottom: 40px;
+}
+.article-show-body {
+  font-size: 1.5em;
+  padding-left: 0em;
+  margin-top: 15px;
+}
+
+.edit-delete {
+  margin-top: 20px;
 }
