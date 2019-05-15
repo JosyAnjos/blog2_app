@@ -60,7 +60,7 @@ body {
 .article-body {
   font-size: 1.5em;
   padding-left: 1.2em;
-  color: #64103F;
+  color: #696969;
 
 }
 
@@ -75,12 +75,13 @@ body {
 
 .article-detail {
   margin-top: 20px;
-  color: #0000ff;
+  color: #000080;
 }
 
 .article-detail-title {
   font-size: 3em;
   margin-bottom: 40px;
+  color: #000080;
 }
 
 .article-show-body {
@@ -95,5 +96,21 @@ body {
 
 // Sign up -- Sign in
 .sign-link a {
+  color: #4682B4;
+}
+
+#error_explanation {
+ background-color: #ADD8E6;
+ color: #a94442;
+ text-align: left;
+ padding: 5px 20px;
+ margin-bottom: 30px;
+}
+
+#error_explanation h2 {
+ font-size: 150%;
+}
+
+footer {
   color: #64103F;
 }
