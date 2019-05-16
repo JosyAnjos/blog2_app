@@ -1,19 +1,33 @@
 require "rails_helper"
 
-RSpec.feature "Showing an article" do 
-  
-  before do 
-    john = User.create(email: "john@exemple.com", password: "password")
-    login_as(john)
-    @article = Article.create(title: "The first article", body: "Lorem ipsum dolor sit amet, consectetur", user: john)
+RSpec.feature "Showing an article" do
+
+  before do
+    @john = User.create(email: "john@exemple.com", password: "password")
+    @fred = User.create(email: "fred@exemple.com",password: "password")
+    @article = Article.create(title: "The first article", body: "Lorem ipsum dolor sit amet, consectetur", user: @john)
   end
-  
-  scenario "A user shows an article" do 
+
+  scenario "to no-signed in user hide Edit and Delete buttom" do
     visit "/"
     click_link @article.title
 
     expect(page).to have_content(@article.title)
     expect(page).to have_content(@article.body)
     expect(current_path).to eq(article_path(@article))
-  end 
-end 
+    expect(page).not_to have_link("Edit Article")
+    expect(page).not_to have_link("Delete Article")
+  end
+
+  scenario "to no-owner hide Edit and Delete buttons" do
+    login_as(@fred)
+    visit "/"
+    click_link @article.title
+
+    expect(page).to have_content(@article.title)
+    expect(page).to have_content(@article.body)
+    expect(current_path).to eq(article_path(@article))
+    expect(page).not_to have_link("Edit Article")
+    expect(page).not_to have_link("Delete Article")
+  end
+end
