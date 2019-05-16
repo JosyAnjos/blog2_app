@@ -9,7 +9,7 @@ body {
 
 // Navbar styling
 .navbar {
- background: #4682B4;
+ background: #64103F;
  padding-bottom: 20px;
 }
 
@@ -60,7 +60,7 @@ body {
 .article-body {
   font-size: 1.5em;
   padding-left: 1.2em;
-  color: #696969;
+  color: #64103F;
 
 }
 
@@ -75,13 +75,12 @@ body {
 
 .article-detail {
   margin-top: 20px;
-  color: #000080;
+  color: #0000ff;
 }
 
 .article-detail-title {
   font-size: 3em;
   margin-bottom: 40px;
-  color: #000080;
 }
 
 .article-show-body {
@@ -96,11 +95,11 @@ body {
 
 // Sign up -- Sign in
 .sign-link a {
-  color: #4682B4;
+  color: #64103F;
 }
 
 #error_explanation {
- background-color: #ADD8E6;
+ background-color: #f2dede;
  color: #a94442;
  text-align: left;
  padding: 5px 20px;
