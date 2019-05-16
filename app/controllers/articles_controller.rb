@@ -8,8 +8,8 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @article = Article.new  	
-  end	
+    @article = Article.new
+  end
 
   def create
     @article = Article.new(article_params)
@@ -19,49 +19,58 @@ class ArticlesController < ApplicationController
       redirect_to articles_path
     else
       flash.now[:danger] = "Article has not been created"
-      render :new  
-    end  
-  end 
+      render :new
+    end
+  end
 
   def show
-  end  
+  end
 
-  def edit 
-  end 
+  def edit
+    unless @article.user == current_user
+      flash[:alert] = "You can only edit your own article."
+      redirect_to root_path
+    end
+  end
 
   def update
-    if @article.update(article_params)
-      flash[:success] = "Article has been updated"
-      redirect_to @article
-
+    unless @article.user == current_user
+      flash[:danger] = "You can only edit your own article."
+      redirect_to root_path
     else
-      flash.now[:danger] = "Article has not been updated"
-      render :edit
-    end   
-  end  
+      if @article.update(article_params)
+        flash[:success] = "Article has been updated"
+        redirect_to @article
+
+      else
+        flash.now[:danger] = "Article has not been updated"
+        render :edit
+      end
+    end
+  end
 
   def destroy
     if @article.destroy
       flash[:success] = "Article has been deleted"
       redirect_to articles_path
-    end  
-  end  
+    end
+  end
 
   protected
 
     def resource_not_found
-      message = "The article you are looking for could not be found" 
+      message = "The article you are looking for could not be found"
       flash[:alert] = message
       redirect_to root_path
-    end 
+    end
 
   private
 
     def set_article
       @article = Article.find(params[:id])
-    end 
+    end
 
     def article_params
       params.require(:article).permit(:title, :body)
-    end  
+    end
 end

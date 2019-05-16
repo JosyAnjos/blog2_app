@@ -2,21 +2,59 @@ require 'rails_helper'
 
 RSpec.describe "Articles", type: :request do
 	before do
-    @article = Article.create(title: "Title one", body: "Body of article one")
+    @john = User.create(email: "john@exemple.com", password: "password")
+    @fred = User.create(email: "fred@exemple.com", password: "password")
+    @article = Article.create!(title: "Title one", body: "Body of article one", user: @john)
    end
-   
-  describe 'GET /articles/:id' do 
+
+  describe 'Get /articles/:id/edit' do
+    context 'with no-signed in user' do
+      before {get "/articles/#{@article.id}/edit" }
+
+      it "redirect to the signin page" do
+        expect(response.status).to eq 302
+        flash_message = "You need to sign in or sign up before continuing"
+        expect(flash[:alert]).to eq flash_message
+      end
+    end
+
+    context 'with signed in user who is non-owner' do
+      before do
+        login_as(@fred)
+        get "/articles/#{@articles.id}/edit"
+      end
+
+      it "redirect to the home page" do
+        expect(response.status).to eq 302
+        flash_message = "You can only edit your own article."
+        expect(flash[:alert]).to eq flash_message
+      end
+    end
+
+    context 'with signed user as owner successul edit' do
+      before do
+        login_as(@john)
+        get "/articles/#{@articles.id}/edit"
+      end
+
+      it "successfuly edits article" do
+        expect(response.status).to eq 200
+      end
+    end
+  end
+
+  describe 'GET /articles/:id' do
     context 'with existing article' do
       before {get "/articles/#{@article.id}" }
 
       it "handles existing article" do
         expect(response.status).to eq 200
       end
-    end  
+    end
 
   context 'with non-existing article' do
     before { get "/articles/xxxx" }
-      
+
       it "handles non-existing article" do
         expect(response.status).to eq 302
         flash_message = "The article you are looking for could not be found"
